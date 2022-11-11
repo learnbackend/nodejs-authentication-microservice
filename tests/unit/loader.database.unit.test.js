@@ -1,13 +1,9 @@
 const Sequelize = require('sequelize');
 const Database = require('../../loaders/database');
 
-jest.mock('sequelize', () => {
-  return jest.fn(() => {
-    return {
-      authenticate: jest.fn()
-    };
-  });
-});
+jest.mock('sequelize', () => jest.fn(() => ({
+  authenticate: jest.fn(),
+})));
 
 afterEach(() => jest.clearAllMocks());
 

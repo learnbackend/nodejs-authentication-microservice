@@ -5,7 +5,7 @@ module.exports = (err, req, res, next) => {
     || (err.original && err.original.code)
     || null;
 
-  const error = errorCodes[code] || errorCodes['INTERNAL_ERROR'];
+  const error = errorCodes[code] || errorCodes.INTERNAL_ERROR;
 
   return res.status(error.statusCode).json({ message: error.message });
 };

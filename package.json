@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "dev": "NODE_ENV=development nodemon app.js"
+    "lint": "npx eslint .",
+    "dev": "NODE_ENV=development nodemon app.js",
+    "prod": "pm2 start pm2.config.js --env production"
   },
   "author": "",
   "license": "MIT",

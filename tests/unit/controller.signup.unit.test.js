@@ -31,7 +31,7 @@ test('it should call the sign up service', async () => {
   );
 });
 
-test('it should send an HTTP 201 Created', async () => {    
+test('it should send an HTTP 201 Created', async () => {
   await signupController(req, res, next);
 
   expect(res.sendStatus).toHaveBeenCalledWith(statusCode);

@@ -4,27 +4,27 @@ const loginService = require('../../services/login');
 const CustomError = require('../../utils/custom-error');
 
 jest.mock('bcrypt', () => ({
-  compare: jest.fn(() => true)
+  compare: jest.fn(() => true),
 }));
 
 jest.mock('jsonwebtoken', () => ({
-  sign: jest.fn()
+  sign: jest.fn(),
 }));
 
 afterEach(() => jest.clearAllMocks());
 
 const data = {
   email: 'user@test.com',
-  password: 'password'
+  password: 'password',
 };
 const user = {
   id: 1,
   email: 'user@test.com',
-  hash: 'hash'
+  hash: 'hash',
 };
 const secret = 'hashstring';
 const repo = {
-  read: jest.fn(() => user)
+  read: jest.fn(() => user),
 };
 
 test('it should call the repository with the email address', async () => {
@@ -48,7 +48,7 @@ test('it should sign the token', async () => {
   expect(jwt.sign).toHaveBeenCalledWith(
     { id: user.id },
     secret,
-    { expiresIn: '1h' }
+    { expiresIn: '1h' },
   );
 });
 
@@ -56,8 +56,8 @@ test('it should throw an error because user does not exist', async () => {
   repo.read.mockReturnValueOnce(null);
   try {
     await loginService(data, secret, repo.read);
-  } catch(error) {
-    expect(error).toEqual(new CustomError);
+  } catch (error) {
+    expect(error).toEqual(new CustomError());
     expect(error.code).toBe('USER_NOT_FOUND');
   }
 });
@@ -66,8 +66,8 @@ test('it should throw an error because password does not match', async () => {
   bcrypt.compare.mockReturnValueOnce(false);
   try {
     await loginService(data, secret, repo.read);
-  } catch(error) {
-    expect(error).toEqual(new CustomError);
+  } catch (error) {
+    expect(error).toEqual(new CustomError());
     expect(error.code).toBe('INCORRECT_PASSWORD');
   }
 });

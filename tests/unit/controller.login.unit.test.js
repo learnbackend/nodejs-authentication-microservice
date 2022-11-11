@@ -8,21 +8,21 @@ afterEach(() => jest.clearAllMocks());
 
 const env = {
   jwt: {
-    secret: 'hello'
-  }
+    secret: 'hello',
+  },
 };
 const repos = {
   user: {
-    read: jest.fn()
-  }
+    read: jest.fn(),
+  },
 };
 const req = {
   body: {
-    email: 'user@test.com'
-  }
+    email: 'user@test.com',
+  },
 };
 const res = {
-  json: jest.fn()
+  json: jest.fn(),
 };
 const next = jest.fn();
 const token = 'tkn';
@@ -34,13 +34,13 @@ test('it should call the log-in service', async () => {
   expect(loginService).toHaveBeenCalledWith(
     req.body,
     env.jwt.secret,
-    repos.user.read
+    repos.user.read,
   );
 });
 
 test('it should send a token', async () => {
   loginService.mockReturnValue(token);
-    
+
   await loginController(req, res, next);
 
   expect(res.json).toHaveBeenCalledWith({ token });
@@ -56,6 +56,6 @@ test('it should catch and forward an error', async () => {
 
   expect(res.json).not.toHaveBeenCalled();
   expect(next).toHaveBeenCalledWith(
-    new CustomError('USER_NOT_FOUND')
+    new CustomError('USER_NOT_FOUND'),
   );
 });
